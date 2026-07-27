@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Theme tokens.
+ *
+ * `:root` holds the LIGHT theme; `.dark` overrides with the premium dark palette.
+ * next-themes toggles the `.dark` class on <html>. All values are space-separated
+ * RGB channels so Tailwind's `<alpha-value>` syntax (e.g. `bg-brand/20`) works.
+ */
+:root {
+  --bg: 255 255 255;
+  --bg-2: 246 248 252;
+  --surface: 255 255 255;
+  --surface-2: 248 250 253;
+  --line: 226 230 238;
+  --line-2: 210 216 228;
+  --content: 15 22 41;
+  --muted: 71 85 105;
+  --muted-2: 120 132 152;
+  --brand: 37 92 235;
+  --brand-2: 47 107 255;
+  --accent: 14 165 233;
+}
+
+.dark {
+  --bg: 5 7 13;
+  --bg-2: 10 14 26;
+  --surface: 14 20 36;
+  --surface-2: 17 26 46;
+  --line: 30 39 58;
+  --line-2: 44 56 82;
+  --content: 238 242 251;
+  --muted: 154 166 194;
+  --muted-2: 102 113 142;
+  --brand: 47 107 255;
+  --brand-2: 91 141 255;
+  --accent: 56 189 248;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+  }
+  body {
+    @apply bg-bg text-content antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+  }
+  ::selection {
+    @apply bg-brand/30;
+  }
+}
+
+@layer components {
+  /* Gradient text used for hero highlights & stat numbers. */
+  .text-gradient {
+    @apply bg-gradient-to-br from-brand-2 to-accent bg-clip-text text-transparent;
+  }
+  /* Decorative background grid, masked to fade out. */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgb(var(--line) / 0.7) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--line) / 0.7) 1px, transparent 1px);
+    background-size: 54px 54px;
+  }
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
